@@ -7,9 +7,9 @@ class CommentsController < ApplicationController
 
     @comment = Comment.find_by(id: params[:id])
 
-    @comment.fetch_comments! if @comment.kids.any? && @comment.comments.empty?
+    return redirect_to root_path if @comment.nil?
 
-    redirect_to root_path if @comment.nil?
+    @comment.fetch_comments! if @comment.kids.any? && @comment.comments.empty?
   end
 
   private
