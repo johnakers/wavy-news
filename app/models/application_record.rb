@@ -4,6 +4,10 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
+  def unfectched_comments?
+    kids.any? && comments.empty?
+  end
+
   private
 
   def hacker_news_client

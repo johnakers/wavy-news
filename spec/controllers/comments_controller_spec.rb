@@ -25,10 +25,20 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     context 'when child-Comments have not been previously fetched' do
-      it 'fetches the child-Comments' do
+      before do
+        allow_any_instance_of(Comment).to receive(:fetch_comments!)
       end
 
-      it 'renders the associated template' do
+      let!(:comment) do
+        FactoryBot.create(:comment, story_id: story.id, parent_id: nil, kids: [38585])
+      end
+
+      it 'fetches the child-Comments' do
+        expect_any_instance_of(Comment).to receive(:fetch_comments!)
+
+        get :show, params: { story_id: story.id, id: comment.id }
+
+        expect(response).to render_template('show')
       end
     end
 

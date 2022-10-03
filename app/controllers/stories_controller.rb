@@ -7,10 +7,14 @@ class StoriesController < ApplicationController
   end
 
   def show
-    @story = Story.includes(:comments).find_by(id: params[:id])
+    return redirect_to root_path if story.nil?
 
-    return redirect_to root_path if @story.nil?
+    story.fetch_comments! if story.unfectched_comments?
+  end
 
-    @story.fetch_comments! if @story.kids.any? && @story.comments.empty?
+  private
+
+  def story
+    @story ||= Story.includes(:comments).find_by(id: params[:id])
   end
 end

@@ -13,6 +13,7 @@ class Comment < ApplicationRecord
       comment_params = hacker_news_client.item(id: child_id)&.merge({ 'story_id' => story_id })
 
       next if comment_params.nil?
+
       comment_params = deleted_comment(comment_params) if comment_params['deleted']
 
       comments.create!(comment_params)

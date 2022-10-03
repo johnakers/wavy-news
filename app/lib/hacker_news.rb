@@ -39,19 +39,8 @@ class HackerNews
       @params = params
     end
 
-    def type
-      params['type']
-    end
-
-    def story?
-      type == 'story'
-    end
-
-    def comment?
-      type == 'comment'
-    end
-
     # only doing Stories and Comments, for now
+    # "Job" is not valid
     def invalid_type?
       !story? && !comment?
     end
@@ -63,9 +52,43 @@ class HackerNews
 
       return output if story?
 
-      # if comment
       output['parent_id'] = output.delete('parent')
       output
     end
+
+    private
+
+    def type
+      params['type']
+    end
+
+    def story?
+      type == 'story'
+    end
+
+    def comment?
+      type == 'comment'
+    end
   end
 end
+
+# Another pattern I like leveraging is:
+
+# class HackerNews
+#   def self.top_stories
+#     HackerNews.new.top_stories
+#   end
+
+#   def self.item(id: nil)
+#     HackerNews.new.item(id: id)
+#   end
+
+#   def top_stories
+#     # code ...
+#   end
+
+#   def self.item
+#     # code ...
+#   end
+# end
+
