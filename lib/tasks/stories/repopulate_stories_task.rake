@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 namespace :stories do
+  desc 'tests to ensure you can call rake tassks from other things, like "ping"'
+  task :test => :environment do
+    Rails.logger.info('test confirmed!')
+    puts 'Test confirmed!'
+    true
+  end
+
+
   desc 'repopulate top 10 stories'
   task :repopulate_top10_stories => :environment do
     Rails.logger.info("Destroying #{Comment.count} Comments")
