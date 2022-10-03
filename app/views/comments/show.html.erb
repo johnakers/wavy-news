@@ -1,0 +1,25 @@
+<div class="story-container">
+  <h4><%= image_tag 'logo.svg' %>news</h4>
+  <div class="links">
+    <%= link_to 'Back to story', story_path(@story) %>
+    <% if @comment.parent %>
+      |  <%= link_to 'Back to parent Comment', story_comment_path(@story, @comment.parent) %>
+    <% end %>
+  </div>
+  <% if @comment.kids %>
+    <h5>Comments</h5>
+    <% @comment.comments.each do |comment| %>
+      <div class="comment">
+        <div class="text"><%= raw comment.text  %></div>
+        <div class="info">
+          <%= comment.by %>
+          <% if comment.kids.any? %>
+            | <%= link_to "#{comment.kids.count} comments", story_comment_path(@story, comment) %>
+          <% end %>
+        </div>
+      <hr />
+    <% end %>
+  <% else %>
+    <h5>No Comments</h5>
+  <% end %>
+</div>
