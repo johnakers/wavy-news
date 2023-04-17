@@ -73,4 +73,4 @@ Refer to `config/schedule.rb`, and the `wheneverize` gem. On Heroku, this is usi
 
 I ran into deleted comments late while working on this, which was interesting. It broke some repopulation logic I had, and has been accounted for.
 
-blah
+_end_
